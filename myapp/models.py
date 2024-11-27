@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 from django.core.validators import  MinValueValidator
 
     
@@ -7,7 +8,12 @@ class Book(models.Model):
     author = models.CharField(max_length=250)
     isbn=  models.CharField(unique=True, max_length=50)
     published_date = models.DateField(auto_now_add=True)
-    price = models.DecimalField(max_digits=6,decimal_places=2,validators = [MinValueValidator(0.0)], default=10)
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],  # Use Decimal here
+        default=Decimal('10.00')
+    )
     created_at = models.DateField(auto_now_add=True)
     time_stamp= models.DateField(auto_now=True)
 
